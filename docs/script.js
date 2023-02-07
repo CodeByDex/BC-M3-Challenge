@@ -10,10 +10,7 @@ let generateBtn = document.querySelector("#generate");
 // Write password to the #password input
 function writePassword() {
   let passwordLength = promptUserForLength();
-  let includeLowercase = promptUserForLowerCase();
-  let includeUpercase = promptUserForUpperCase();
-  let includeNumeric = promptUserForNumeric();
-  let includeSpecial = promptuserForSpecial();
+  let { includeLowercase, includeUpercase, includeNumeric, includeSpecial } = getPasswordRules();
   
   let password = generatePassword(passwordLength, includeLowercase, includeUpercase, includeNumeric, includeSpecial);
 
@@ -21,6 +18,20 @@ function writePassword() {
 
   passwordText.value = password;
 
+}
+
+function getPasswordRules() {
+  let includeLowercase = promptUserForLowerCase();
+  let includeUpercase = promptUserForUpperCase();
+  let includeNumeric = promptUserForNumeric();
+  let includeSpecial = promptuserForSpecial();
+
+  if (!(includeLowercase || includeUpercase || includeNumeric || includeSpecial)){
+    alert("you must select at least one character type.");
+    return getPasswordRules();
+  };
+
+  return { includeLowercase, includeUpercase, includeNumeric, includeSpecial };
 }
 
 function generatePassword(passwordLength, includeLowercase, includeUpercase, includeNumeric, includeSpecial){
