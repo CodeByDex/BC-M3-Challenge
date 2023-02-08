@@ -35,7 +35,31 @@ function getPasswordRules() {
 }
 
 function generatePassword(passwordLength, includeLowercase, includeUpercase, includeNumeric, includeSpecial){
-  return "Params" + passwordLength + includeLowercase + includeUpercase + includeNumeric + includeSpecial;
+  let useableCharacters = [];
+
+  if (includeLowercase){
+    useableCharacters = useableCharacters.concat(lowercase);
+  }
+
+  if (includeNumeric) {
+    useableCharacters = useableCharacters.concat(numbers);
+  }
+
+  if (includeSpecial) {
+    useableCharacters = useableCharacters.concat(special);
+  }
+
+  if (includeUpercase) {
+    useableCharacters = useableCharacters.concat(uppercase);
+  }
+
+  let password = "";
+
+  for (let index = 0; index < passwordLength; index++) {
+    password += useableCharacters[Math.floor(Math.random() * useableCharacters.length)];
+  }
+  
+  return password;
 };
 
 function promptUserForLength(){
